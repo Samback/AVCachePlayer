@@ -16,6 +16,9 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
+*.project.pbxproj
+*.project.xcworkspace
+
 
 # CocoaPods
 #

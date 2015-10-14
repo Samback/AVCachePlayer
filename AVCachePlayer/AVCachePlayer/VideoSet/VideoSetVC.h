@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  VideoSetVC.h
 //  AVCachePlayer
 //
 //  Created by Max Tymchiy on 10/14/15.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface VideoSetVC : UIViewController
 
 @end
-

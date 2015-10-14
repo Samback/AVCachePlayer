@@ -7,8 +7,7 @@
 //
 
 #import "VideoSetVC.h"
-#import <AVFoundation/AVFoundation.h>
-#import <AVKit/AVKit.h>
+#import "MyAVPlayeVC.h"
 
 @interface VideoSetVC ()
 
@@ -29,11 +28,9 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.destinationViewController isKindOfClass:[AVPlayerViewController class]]) {
-        AVPlayerViewController *playerVC = (AVPlayerViewController *)segue.destinationViewController;
-        NSURL *url = [NSURL URLWithString:@"http://sample-videos.com/video/mp4/720/big_buck_bunny_720p_50mb.mp4"];
-        playerVC.player = [[AVPlayer alloc] initWithURL:url];
-        
+    if ([segue.destinationViewController isKindOfClass:[MyAVPlayeVC class]]) {
+        MyAVPlayeVC *playerVC = (MyAVPlayeVC *)segue.destinationViewController;
+       [playerVC setUpLink:@"http://sample-videos.com/video/mp4/720/big_buck_bunny_720p_50mb.mp4"]; 
     }
 }
 @end

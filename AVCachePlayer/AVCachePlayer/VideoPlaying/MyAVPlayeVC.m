@@ -1,0 +1,46 @@
+//
+//  MyAVPlayeVC.m
+//  AVCachePlayer
+//
+//  Created by Max Tymchiy on 10/14/15.
+//  Copyright © 2015 Max Tymchiy. All rights reserved.
+//
+#import <AVFoundation/AVFoundation.h>
+
+#import "MyAVPlayeVC.h"
+
+@interface MyAVPlayeVC ()
+@property (nonatomic, strong) NSURL *baseVideoLink;
+@end
+
+@implementation MyAVPlayeVC
+
+- (void)setUpLink:(NSString *)link
+{
+    if (link) {
+      self.baseVideoLink = [NSURL URLWithString:link];
+    }
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.player = [[AVPlayer alloc] initWithURL:_baseVideoLink];
+    // Do any additional setup after loading the view.
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

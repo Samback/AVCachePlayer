@@ -38,7 +38,7 @@
         <!--AV Player View Controller-->
         <scene sceneID="wn2-GN-IRG">
             <objects>
-                <avPlayerViewController videoGravity="AVLayerVideoGravityResizeAspect" id="O1c-6g-byi" sceneMemberID="viewController"/>
+                <avPlayerViewController videoGravity="AVLayerVideoGravityResizeAspect" id="O1c-6g-byi" customClass="MyAVPlayeVC" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="blS-5h-ZEs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1122" y="393"/>

@@ -14,6 +14,7 @@
 		34682D211BCE480700DA43DB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34682D1F1BCE480700DA43DB /* LaunchScreen.storyboard */; };
 		34682D2C1BCE480700DA43DB /* AVCachePlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 34682D2B1BCE480700DA43DB /* AVCachePlayerTests.m */; };
 		34682D3D1BCE4AEB00DA43DB /* VideoSetVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 34682D3C1BCE4AEB00DA43DB /* VideoSetVC.m */; settings = {ASSET_TAGS = (); }; };
+		34682D411BCE518200DA43DB /* MyAVPlayeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 34682D401BCE518200DA43DB /* MyAVPlayeVC.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,8 @@
 		34682D2D1BCE480700DA43DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		34682D3B1BCE4AEB00DA43DB /* VideoSetVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VideoSetVC.h; path = VideoSet/VideoSetVC.h; sourceTree = "<group>"; };
 		34682D3C1BCE4AEB00DA43DB /* VideoSetVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VideoSetVC.m; path = VideoSet/VideoSetVC.m; sourceTree = "<group>"; };
+		34682D3F1BCE518200DA43DB /* MyAVPlayeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyAVPlayeVC.h; path = VideoPlaying/MyAVPlayeVC.h; sourceTree = "<group>"; };
+		34682D401BCE518200DA43DB /* MyAVPlayeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyAVPlayeVC.m; path = VideoPlaying/MyAVPlayeVC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +85,7 @@
 			isa = PBXGroup;
 			children = (
 				34682D361BCE484D00DA43DB /* VideoSet */,
+				34682D3E1BCE512300DA43DB /* VideoPlaying */,
 				34682D141BCE480700DA43DB /* AppDelegate.h */,
 				34682D151BCE480700DA43DB /* AppDelegate.m */,
 				34682D1A1BCE480700DA43DB /* Main.storyboard */,
@@ -117,6 +121,15 @@
 				34682D3C1BCE4AEB00DA43DB /* VideoSetVC.m */,
 			);
 			name = VideoSet;
+			sourceTree = "<group>";
+		};
+		34682D3E1BCE512300DA43DB /* VideoPlaying */ = {
+			isa = PBXGroup;
+			children = (
+				34682D3F1BCE518200DA43DB /* MyAVPlayeVC.h */,
+				34682D401BCE518200DA43DB /* MyAVPlayeVC.m */,
+			);
+			name = VideoPlaying;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -220,6 +233,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				34682D161BCE480700DA43DB /* AppDelegate.m in Sources */,
+				34682D411BCE518200DA43DB /* MyAVPlayeVC.m in Sources */,
 				34682D3D1BCE4AEB00DA43DB /* VideoSetVC.m in Sources */,
 				34682D131BCE480700DA43DB /* main.m in Sources */,
 			);

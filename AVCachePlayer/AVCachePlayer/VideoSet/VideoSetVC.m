@@ -30,7 +30,7 @@
 {
     if ([segue.destinationViewController isKindOfClass:[MyAVPlayeVC class]]) {
         MyAVPlayeVC *playerVC = (MyAVPlayeVC *)segue.destinationViewController;
-       [playerVC setUpLink:@"http://sample-videos.com/video/mp4/720/big_buck_bunny_720p_50mb.mp4"]; 
+       [playerVC setUpLink:@"http://youtubeinmp4.com/redirect.php?video=FX6MY9uJnFc&r=WtlG3mBm0bMIjyqfmZO7RouA70fYqGeFOQKpieLewP0%3D"];
     }
 }
 @end

@@ -10,14 +10,17 @@
 
 #import "MyAVPlayeVC.h"
 
-@interface MyAVPlayeVC ()<AVAssetResourceLoaderDelegate, NSURLSessionDelegate>
+
+
+
+@interface MyAVPlayeVC ()<AVAssetResourceLoaderDelegate, NSURLSessionDelegate, NSURLSessionDataDelegate>
 {
     BOOL isLoadingComplete;
+    NSUInteger totalLength;
+    NSString *nameFile;
 }
 @property (nonatomic, strong) NSURL *baseVideoLink;
-
-@property (nonatomic, strong) NSMutableData *videoData;
-@property (nonatomic, strong) NSURLConnection *connection;
+@property (nonatomic, strong) NSURLSession *session;
 @property (nonatomic, strong) AVURLAsset *vidAsset;
 @property (nonatomic, strong) AVPlayerItem *playerItem;
 @property (nonatomic, strong) AVPlayerLayer *avlayer;
@@ -40,6 +43,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupVideoPlayerConfiguration];
+    nameFile = [NSDate date].description;
 
     // Do any additional setup after loading the view.
 }
@@ -73,18 +77,20 @@
         return YES;
     }
     
-    if (self.connection == nil)
+    if (self.session == nil)
     {
         NSURL *interceptedURL = [loadingRequest.request URL];
         NSURLComponents *actualURLComponents = [[NSURLComponents alloc] initWithURL:interceptedURL resolvingAgainstBaseURL:NO];
         actualURLComponents.scheme = @"http";
         
         NSURLRequest *request = [NSURLRequest requestWithURL:[actualURLComponents URL]];
-        self.connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO];
-        [self.connection setDelegateQueue:[NSOperationQueue mainQueue]];
         
+        self.session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]
+                                                     delegate:self delegateQueue:[NSOperationQueue mainQueue]];
+
+        NSURLSessionDataTask *downloadTask = [self.session dataTaskWithRequest:request];
         isLoadingComplete = NO;
-        [self.connection start];
+        [downloadTask resume];
     }
     
     [self.pendingRequests addObject:loadingRequest];
@@ -92,31 +98,33 @@
 }
 
 
-/**
- NSURLConnection Delegate Methods
- */
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+- (void)URLSession:(NSURLSession *)session didBecomeInvalidWithError:(nullable NSError *)error
 {
-    NSLog(@"didReceiveResponse");
-    self.videoData = [NSMutableData data];
-    self.response = (NSHTTPURLResponse *)response;
-    [self processPendingRequests];
+    NSLog(@"Error %@", error);
 }
 
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data
 {
-    NSLog(@"Received Data - appending to video & processing request");
-    [self.videoData appendData:data];
+    totalLength += data.length;
     [self writeToLogFile:data];
     [self processPendingRequests];
 }
 
 
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition))completionHandler
+{
+    completionHandler(NSURLSessionResponseAllow);
+    self.response = (NSHTTPURLResponse *)response;
+    [self processPendingRequests];
+}
+
 -(void) writeToLogFile:(NSData *)data
 {
     //get the documents directory:
     NSString *documentsDirectory = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
-    NSString *fileName = [documentsDirectory stringByAppendingPathComponent:@"hydraLog.mp4"];
+    NSString *name = [nameFile stringByAppendingString:@".mp4"];
+    NSString *fileName = [documentsDirectory stringByAppendingPathComponent:name];
     
     NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:fileName];
     if (fileHandle){
@@ -128,6 +136,9 @@
         [data writeToFile:fileName atomically:YES];
     }
 }
+
+
+
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
@@ -155,7 +166,6 @@
         if (didRespondCompletely)
         {
             [requestsCompleted addObject:loadingRequest];
-            
             [loadingRequest finishLoading];
         }
     }
@@ -190,24 +200,63 @@
     }
     
     // Don't have any data at all for this request
-    if (self.videoData.length < startOffset)
+   
+    if (totalLength < startOffset)
     {
         NSLog(@"NO DATA FOR REQUEST");
         return NO;
     }
     
+    // This is the total data we have from startOffset to whatever has been downloaded so fa
+    
     // This is the total data we have from startOffset to whatever has been downloaded so far
-    NSUInteger unreadBytes = self.videoData.length - (NSUInteger)startOffset;
+    NSUInteger unreadBytes = totalLength - (NSUInteger)startOffset;
     
     // Respond with whatever is available if we can't satisfy the request fully yet
     NSUInteger numberOfBytesToRespondWith = MIN((NSUInteger)dataRequest.requestedLength, unreadBytes);
     
-    [dataRequest respondWithData:[self.videoData subdataWithRange:NSMakeRange((NSUInteger)startOffset, numberOfBytesToRespondWith)]];
+//    NSData *dataa = [self.videoData subdataWithRange:NSMakeRange((NSUInteger)startOffset, numberOfBytesToRespondWith)];
     
+    NSData *dataFromFile = [self dataAtOffset:(NSUInteger)startOffset withLength:numberOfBytesToRespondWith];
+    
+//    if ([dataa isEqualToData:dataFromFile]) {
+//        NSLog(@"Cool");
+//    } else {
+//        NSLog(@"Something wrong");
+//    }
+    
+    [dataRequest respondWithData:dataFromFile];
+
     long long endOffset = startOffset + dataRequest.requestedLength;
-    BOOL didRespondFully = self.videoData.length >= endOffset;
-    
+    BOOL didRespondFully = totalLength >= endOffset;
     return didRespondFully;
+}
+
+
+- (NSData *)dataAtOffset:(NSUInteger)offset withLength:(NSUInteger)bytes
+{
+    NSString *documentsDirectory = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+    NSString *name = [nameFile stringByAppendingString:@".mp4"];
+    NSString *fileName = [documentsDirectory stringByAppendingPathComponent:name];
+    
+    NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingAtPath:fileName];
+    NSLog(@"Read bytes %ld", bytes);
+    NSUInteger end = [fileHandle seekToEndOfFile];
+    
+    if (end < bytes) {
+        NSLog(@"Not enough offset");
+        return [NSData data];
+    }
+    if (fileHandle){
+        [fileHandle seekToFileOffset:offset];
+        NSData *data = [fileHandle readDataOfLength:bytes];
+        [fileHandle closeFile];
+        return data;
+    }
+    else{
+        [fileHandle seekToFileOffset:offset];
+        return [fileHandle readDataOfLength:bytes];
+    }
 }
 
 - (void)resourceLoader:(AVAssetResourceLoader *)resourceLoader didCancelLoadingRequest:(AVAssetResourceLoadingRequest *)loadingRequest
@@ -216,68 +265,5 @@
     [self.pendingRequests removeObject:loadingRequest];
 }
 
-
-/**
- KVO
- */
-
-//- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-//{
-//    if (context == StatusObservationContext)
-//    {
-//        AVPlayerStatus status = [[change objectForKey:NSKeyValueChangeNewKey] integerValue];
-//        
-//        if (status == AVPlayerStatusReadyToPlay) {
-//            [self initHud];
-//            [self play:NO];
-//        } else if (status == AVPlayerStatusFailed)
-//        {
-//            NSLog(@"ERROR::AVPlayerStatusFailed");
-//            
-//        } else if (status == AVPlayerItemStatusUnknown)
-//        {
-//            NSLog(@"ERROR::AVPlayerItemStatusUnknown");
-//        }
-//        
-//    } else if (context == CurrentItemObservationContext) {
-//        
-//        
-//    } else if (context == RateObservationContext) {
-//        
-//        
-//    } else if (context == BufferObservationContext){
-//        
-//        
-//    } else if (context == playbackLikelyToKeepUp) {
-//        
-//        if (self.player.currentItem.playbackLikelyToKeepUp)
-//            
-//            
-//            }
-//    
-//} else if (context == playbackBufferEmpty) {
-//    
-//    if (self.player.currentItem.playbackBufferEmpty)
-//    {
-//        NSLog(@"Video Asset is playable: %d", self.videoAsset.isPlayable);
-//        
-//        NSLog(@"Player Item Status: %ld", self.player.currentItem.status);
-//        
-//        NSLog(@"Connection Request: %@", self.connection.currentRequest);
-//        
-//        NSLog(@"Video Data: %lu", (unsigned long)self.videoData.length);
-//        
-//        
-//    }
-//    
-//} else if(context == playbackBufferFull) {
-//    
-//    
-//} else {
-//    
-//    [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-//}
-//
-//}
 
 @end

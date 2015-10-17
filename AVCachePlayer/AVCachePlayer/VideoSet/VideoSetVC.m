@@ -30,7 +30,7 @@
 {
     if ([segue.destinationViewController isKindOfClass:[MyAVPlayeVC class]]) {
         MyAVPlayeVC *playerVC = (MyAVPlayeVC *)segue.destinationViewController;
-       [playerVC setUpLink:@"http://youtubeinmp4.com/redirect.php?video=FX6MY9uJnFc&r=WtlG3mBm0bMIjyqfmZO7RouA70fYqGeFOQKpieLewP0%3D"];
+       [playerVC setUpLink:@"http://youtubeinmp4.com/redirect.php?video=MzqyGfQcilA&r=fewjCqH0bQLuZroQE8as%2FCGsDEW9WFOT6kKc%2FXP91Sc%3D"];
     }
 }
 @end

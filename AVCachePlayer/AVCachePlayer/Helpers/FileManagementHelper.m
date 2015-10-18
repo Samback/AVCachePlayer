@@ -57,9 +57,7 @@
         return data;
     }
     else{
-        NSLog(@"IN here");
-        [fileHandle seekToFileOffset:startOffset];
-        return [fileHandle readDataOfLength:bytesLengthToRead];
+        return nil;
     }
 }
 

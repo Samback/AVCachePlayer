@@ -11,7 +11,6 @@
 @protocol DownloadSessionDelegate <NSObject>
 - (void)addNewChunckOfData:(NSData *)data;
 - (void)processPendingRequests;
-
 @end
 
 @interface DownloadSession : NSObject <NSURLSessionDelegate, NSURLSessionDataDelegate>

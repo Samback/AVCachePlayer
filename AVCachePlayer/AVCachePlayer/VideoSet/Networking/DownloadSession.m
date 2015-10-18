@@ -33,8 +33,7 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:[actualURLComponents URL]];
     
     downloadSession.session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]
-                                                 delegate:downloadSession delegateQueue:[NSOperationQueue mainQueue]];
-    
+                                                            delegate:downloadSession delegateQueue:[NSOperationQueue mainQueue]];
     downloadSession.dataTask = [downloadSession.session dataTaskWithRequest:request];
     return downloadSession;
 }
@@ -63,13 +62,5 @@
     self.response = (NSHTTPURLResponse *)response;
     [self.delegate processPendingRequests];
 }
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-    NSLog(@"connectionDidFinishLoading::WriteToFile");
-    [self.delegate processPendingRequests];
-}
-
-
 
 @end

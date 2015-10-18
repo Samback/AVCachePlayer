@@ -19,6 +19,8 @@
 		349041041BD2DA2E00D927BE /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 349041031BD2DA2E00D927BE /* NSString+MD5.m */; settings = {ASSET_TAGS = (); }; };
 		3490410B1BD2DD6E00D927BE /* ResourceLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 3490410A1BD2DD6E00D927BE /* ResourceLoader.m */; settings = {ASSET_TAGS = (); }; };
 		3490410E1BD2E29700D927BE /* DownloadSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 3490410D1BD2E29700D927BE /* DownloadSession.m */; settings = {ASSET_TAGS = (); }; };
+		349041151BD4469200D927BE /* MyAVPlayeVC+HUDWorker.m in Sources */ = {isa = PBXBuildFile; fileRef = 349041141BD4469200D927BE /* MyAVPlayeVC+HUDWorker.m */; settings = {ASSET_TAGS = (); }; };
+		61614DD1BE5746F52D3D3D05 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1912BB6AC5F927821F0050C /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +57,11 @@
 		3490410A1BD2DD6E00D927BE /* ResourceLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ResourceLoader.m; path = VideoSet/Networking/ResourceLoader.m; sourceTree = "<group>"; };
 		3490410C1BD2E29700D927BE /* DownloadSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DownloadSession.h; path = VideoSet/Networking/DownloadSession.h; sourceTree = "<group>"; };
 		3490410D1BD2E29700D927BE /* DownloadSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DownloadSession.m; path = VideoSet/Networking/DownloadSession.m; sourceTree = "<group>"; };
+		349041131BD4469200D927BE /* MyAVPlayeVC+HUDWorker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MyAVPlayeVC+HUDWorker.h"; path = "VideoPlaying/Categories/MyAVPlayeVC+HUDWorker.h"; sourceTree = "<group>"; };
+		349041141BD4469200D927BE /* MyAVPlayeVC+HUDWorker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MyAVPlayeVC+HUDWorker.m"; path = "VideoPlaying/Categories/MyAVPlayeVC+HUDWorker.m"; sourceTree = "<group>"; };
+		3516F0DCC77D0B8A47DE29AC /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		A1912BB6AC5F927821F0050C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C6C6DE7CBE257D1387B2B512 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61614DD1BE5746F52D3D3D05 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,12 +83,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2BF2CC108A2DEA128A606026 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A1912BB6AC5F927821F0050C /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		34682D051BCE480700DA43DB = {
 			isa = PBXGroup;
 			children = (
 				34682D101BCE480700DA43DB /* AVCachePlayer */,
 				34682D2A1BCE480700DA43DB /* AVCachePlayerTests */,
 				34682D0F1BCE480700DA43DB /* Products */,
+				B7E377CA8A41D032CBB7B3BB /* Pods */,
+				2BF2CC108A2DEA128A606026 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -141,6 +159,7 @@
 			isa = PBXGroup;
 			children = (
 				349041051BD2DCDD00D927BE /* Networking */,
+				349041121BD4463000D927BE /* Categories */,
 				34682D3F1BCE518200DA43DB /* MyAVPlayeVC.h */,
 				34682D401BCE518200DA43DB /* MyAVPlayeVC.m */,
 			);
@@ -176,6 +195,24 @@
 			name = Networking;
 			sourceTree = "<group>";
 		};
+		349041121BD4463000D927BE /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				349041131BD4469200D927BE /* MyAVPlayeVC+HUDWorker.h */,
+				349041141BD4469200D927BE /* MyAVPlayeVC+HUDWorker.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
+		B7E377CA8A41D032CBB7B3BB /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C6C6DE7CBE257D1387B2B512 /* Pods.debug.xcconfig */,
+				3516F0DCC77D0B8A47DE29AC /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -183,9 +220,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 34682D301BCE480700DA43DB /* Build configuration list for PBXNativeTarget "AVCachePlayer" */;
 			buildPhases = (
+				0CE8A027506AF6293823403E /* Check Pods Manifest.lock */,
 				34682D0A1BCE480700DA43DB /* Sources */,
 				34682D0B1BCE480700DA43DB /* Frameworks */,
 				34682D0C1BCE480700DA43DB /* Resources */,
+				A117AD3D48DA6F35741C52E4 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -271,6 +310,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0CE8A027506AF6293823403E /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		A117AD3D48DA6F35741C52E4 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		34682D0A1BCE480700DA43DB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -279,6 +351,7 @@
 				3490410E1BD2E29700D927BE /* DownloadSession.m in Sources */,
 				349041041BD2DA2E00D927BE /* NSString+MD5.m in Sources */,
 				34682D161BCE480700DA43DB /* AppDelegate.m in Sources */,
+				349041151BD4469200D927BE /* MyAVPlayeVC+HUDWorker.m in Sources */,
 				34682D411BCE518200DA43DB /* MyAVPlayeVC.m in Sources */,
 				3490410B1BD2DD6E00D927BE /* ResourceLoader.m in Sources */,
 				34682D3D1BCE4AEB00DA43DB /* VideoSetVC.m in Sources */,
@@ -409,6 +482,7 @@
 		};
 		34682D311BCE480700DA43DB /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C6C6DE7CBE257D1387B2B512 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = AVCachePlayer/Info.plist;
@@ -420,6 +494,7 @@
 		};
 		34682D321BCE480700DA43DB /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3516F0DCC77D0B8A47DE29AC /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = AVCachePlayer/Info.plist;

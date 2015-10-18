@@ -12,6 +12,10 @@
 
 #import <MobileCoreServices/MobileCoreServices.h>
 
+NSString *AVCACHE_PLAYER_GET_DATA_NOTIFICATION = @"AVCACHE_PLAYER_GET_DATA_NOTIFICATION";
+NSString *AVCACHE_PLAYER_REMOVE_HUD_NOTIFICATION = @"AVCACHE_PLAYER_REMOVE_HUD_NOTIFICATION";
+NSString const *AVCACHE_PLAYER_GET_DATA_OFFSET = @"AVCACHE_PLAYER_GET_DATA_OFFSET";
+NSString const *AVCACHE_PLAYER_DATA_TOTAL_LENGTH = @"AVCACHE_PLAYER_DATA_TOTAL_LENGTH";
 
 @interface ResourceLoader () <DownloadSessionDelegate>
 {
@@ -19,7 +23,6 @@
     NSUInteger sumLength;
     NSUInteger videoBytesLength;
 }
-
 @property (nonatomic, strong) NSMutableArray *pendingRequests;
 @property (nonatomic, strong) DownloadSession *downloadSession;
 @property (nonatomic, weak) id <ResourceLoaderDelegate>delegate;
@@ -76,23 +79,22 @@
         startOffset = dataRequest.currentOffset;
     }
     
-    // Don't have any data at all for this request
-    
     if (sumLength < startOffset)
     {
-        NSLog(@"NO DATA FOR REQUEST");
+        NSLog(@"This data was not loaded yet");
         return NO;
     }
     
     NSUInteger unreadBytes = sumLength - (NSUInteger)startOffset;
-    
     NSUInteger numberOfBytesToRespondWith = MIN((NSUInteger)dataRequest.requestedLength, unreadBytes);
-   
     NSData *dataFromFile =  [FileManagementHelper fetchDataFromFileWithName:[self.delegate fileNameOfCurrentVideo]
                                                                    atOffset:startOffset
                                                                  withLength:numberOfBytesToRespondWith];
     
     [dataRequest respondWithData:dataFromFile];
+    if (!dataFromFile) {
+        return NO;
+    }
     
     long long endOffset = startOffset + dataRequest.requestedLength;
     BOOL didRespondFully = sumLength >= endOffset;
@@ -132,6 +134,8 @@
     [self.pendingRequests removeAllObjects];
     [self.downloadSession.dataTask cancel];
     [self.downloadSession.session  finishTasksAndInvalidate];
+    [[NSNotificationCenter defaultCenter] postNotificationName:AVCACHE_PLAYER_REMOVE_HUD_NOTIFICATION
+                                                        object:nil];
 }
 
 
@@ -142,8 +146,7 @@
 
 - (void)fillInContentInformation:(AVAssetResourceLoadingContentInformationRequest *)contentInformationRequest
 {
-    if (contentInformationRequest == nil || self.downloadSession.response == nil)
-    {
+    if (contentInformationRequest == nil || self.downloadSession.response == nil){
         return;
     }
    
@@ -154,15 +157,20 @@
     contentInformationRequest.byteRangeAccessSupported = YES;
     contentInformationRequest.contentType = CFBridgingRelease(contentType);
     contentInformationRequest.contentLength = [self.downloadSession.response expectedContentLength];
-    
 }
 
 - (void)addNewChunckOfData:(NSData *)data
 {
     sumLength += data.length;
-    NSLog(@" length %ld", data.length);
+    [[NSNotificationCenter defaultCenter] postNotificationName:AVCACHE_PLAYER_GET_DATA_NOTIFICATION
+                                                        object:nil
+                                                      userInfo:@{AVCACHE_PLAYER_GET_DATA_OFFSET : @(sumLength),
+                                                                 AVCACHE_PLAYER_DATA_TOTAL_LENGTH : @(videoBytesLength) }];
+    
     [FileManagementHelper writeAtFileWithName:[self.delegate fileNameOfCurrentVideo] dataChunck:data];
-    if (videoBytesLength && videoBytesLength == sumLength) {
+    if (videoBytesLength == sumLength && videoBytesLength != 0) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:AVCACHE_PLAYER_REMOVE_HUD_NOTIFICATION
+                                                            object:nil];
         isLoadingComplete = YES;
     }
 }

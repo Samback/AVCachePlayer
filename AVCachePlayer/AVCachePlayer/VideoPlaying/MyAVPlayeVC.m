@@ -9,10 +9,9 @@
 
 
 #import "MyAVPlayeVC.h"
+#import "MyAVPlayeVC+HUDWorker.h"
 #import "ResourceLoader.h"
 #import "FileManagementHelper.h"
-
-
 
 @interface MyAVPlayeVC () <ResourceLoaderDelegate>
 @property (nonatomic, strong) NSURL *baseVideoLink;
@@ -33,11 +32,10 @@
     }
 }
 
+#pragma mark - Life Cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupVideoPlayerConfiguration];
-
-    // Do any additional setup after loading the view.
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -46,7 +44,19 @@
     [self.player cancelPendingPrerolls];
     if (self.resourceLoader && ![self.resourceLoader isFileDownloaded]) {
         NSError *error = [FileManagementHelper tryToDeleteFileWithName:[self.baseVideoLink absoluteString]];
-        NSLog(@"Error %@", error);
+        if (error) {
+            NSLog(@"Error it was an error duaring removing of file %@", error.localizedDescription);
+        }
+    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:AVCACHE_PLAYER_REMOVE_HUD_NOTIFICATION
+                                                        object:nil];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    if (self.resourceLoader) {
+        [self.resourceLoader cancellAllRequests];
     }
 }
 
@@ -56,11 +66,11 @@
         NSURL *filePathURL = [NSURL fileURLWithPath:[FileManagementHelper fullPathToFileName:[_baseVideoLink absoluteString]]];
         AVAsset *asset = [AVURLAsset URLAssetWithURL:filePathURL options:nil];
         AVPlayerItem *anItem = [AVPlayerItem playerItemWithAsset:asset];
-
-         self.player = [AVPlayer playerWithPlayerItem:anItem];
+        self.player = [AVPlayer playerWithPlayerItem:anItem];
         [self.player play];
     } else {
         AVURLAsset *asset = [AVURLAsset URLAssetWithURL:_baseVideoLink options:nil];
+        [self startDownloadHUD];
         self.resourceLoader = [ResourceLoader createResourceLoaderWithDelegate:self];
         [asset.resourceLoader setDelegate:self.resourceLoader
                                     queue:dispatch_get_main_queue()];

@@ -9,15 +9,19 @@
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
 
+extern NSString *AVCACHE_PLAYER_GET_DATA_NOTIFICATION;
+extern NSString *AVCACHE_PLAYER_REMOVE_HUD_NOTIFICATION;
+extern const NSString *AVCACHE_PLAYER_GET_DATA_OFFSET;
+extern const NSString *AVCACHE_PLAYER_DATA_TOTAL_LENGTH;
+
 @protocol ResourceLoaderDelegate <NSObject>
 - (NSString *)fileNameOfCurrentVideo;
 - (NSURL *)inputVideoURL;
-- (void)finishDownload:(BOOL)downloadFlag withError:(NSError *)error;
 @end
 
 @interface ResourceLoader : NSObject <AVAssetResourceLoaderDelegate>
 + (instancetype)createResourceLoaderWithDelegate:(id<ResourceLoaderDelegate>)aDelegate;
-- (void)cancellAllRequests;
 
+- (void)cancellAllRequests;
 - (BOOL)isFileDownloaded;
 @end

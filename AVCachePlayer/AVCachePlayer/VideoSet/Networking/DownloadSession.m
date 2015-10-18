@@ -18,10 +18,9 @@
 
 @implementation DownloadSession
 
-
-
-+ (instancetype)createDownloadSessionWithURL:(NSURL *)url withDelegate:(id<DownloadSessionDelegate>)aDelegate;
-
++ (instancetype)createDownloadSessionWithURL:(NSURL *)url
+                                   urlScheme:(NSString *)scheme
+                                withDelegate:(id<DownloadSessionDelegate>)aDelegate
 {
     DownloadSession *downloadSession = [[DownloadSession alloc] init];
     if (!downloadSession) {
@@ -30,8 +29,7 @@
     downloadSession.delegate = aDelegate;
     NSURLComponents *actualURLComponents = [[NSURLComponents alloc] initWithURL:url
                                                         resolvingAgainstBaseURL:NO];
-    actualURLComponents.scheme = @"http";
-    
+    actualURLComponents.scheme = scheme;
     NSURLRequest *request = [NSURLRequest requestWithURL:[actualURLComponents URL]];
     
     downloadSession.session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]

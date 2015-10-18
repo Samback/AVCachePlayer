@@ -20,7 +20,7 @@
 @property (nonatomic, strong, readonly) NSURLSessionDataTask *dataTask;
 @property (nonatomic, strong, readonly) NSHTTPURLResponse *response;
 
-+ (instancetype)createDownloadSessionWithURL:(NSURL *)url withDelegate:(id<DownloadSessionDelegate>)aDelegate;
++ (instancetype)createDownloadSessionWithURL:(NSURL *)url urlScheme:(NSString *)scheme withDelegate:(id<DownloadSessionDelegate>)aDelegate ;
 
 - (void)resume;
 @end

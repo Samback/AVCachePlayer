@@ -11,8 +11,13 @@
 
 @protocol ResourceLoaderDelegate <NSObject>
 - (NSString *)fileNameOfCurrentVideo;
+- (NSURL *)inputVideoURL;
+- (void)finishDownload:(BOOL)downloadFlag withError:(NSError *)error;
 @end
 
 @interface ResourceLoader : NSObject <AVAssetResourceLoaderDelegate>
 + (instancetype)createResourceLoaderWithDelegate:(id<ResourceLoaderDelegate>)aDelegate;
+- (void)cancellAllRequests;
+
+- (BOOL)isFileDownloaded;
 @end

@@ -15,8 +15,9 @@
 
 @interface ResourceLoader () <DownloadSessionDelegate>
 {
-    BOOL isLoadingComplete;
-    NSUInteger totalLength;
+    BOOL  isLoadingComplete;
+    NSUInteger sumLength;
+    NSUInteger videoBytesLength;
 }
 
 @property (nonatomic, strong) NSMutableArray *pendingRequests;
@@ -33,7 +34,6 @@
     }
     return _pendingRequests;
 }
-
 
 + (instancetype)createResourceLoaderWithDelegate:(id<ResourceLoaderDelegate>)aDelegate
 {
@@ -57,6 +57,7 @@
     if (self.downloadSession == nil)
     {
         self.downloadSession = [DownloadSession createDownloadSessionWithURL:[loadingRequest.request URL]
+                                                                   urlScheme:[self.delegate inputVideoURL].scheme
                                                                 withDelegate:self];
        
         [self.downloadSession resume];
@@ -77,13 +78,13 @@
     
     // Don't have any data at all for this request
     
-    if (totalLength < startOffset)
+    if (sumLength < startOffset)
     {
         NSLog(@"NO DATA FOR REQUEST");
         return NO;
     }
     
-    NSUInteger unreadBytes = totalLength - (NSUInteger)startOffset;
+    NSUInteger unreadBytes = sumLength - (NSUInteger)startOffset;
     
     NSUInteger numberOfBytesToRespondWith = MIN((NSUInteger)dataRequest.requestedLength, unreadBytes);
    
@@ -94,13 +95,12 @@
     [dataRequest respondWithData:dataFromFile];
     
     long long endOffset = startOffset + dataRequest.requestedLength;
-    BOOL didRespondFully = totalLength >= endOffset;
+    BOOL didRespondFully = sumLength >= endOffset;
     return didRespondFully;
 }
 
 - (void)resourceLoader:(AVAssetResourceLoader *)resourceLoader didCancelLoadingRequest:(AVAssetResourceLoadingRequest *)loadingRequest
 {
-    NSLog(@"didCancelLoadingRequest");
     [self.pendingRequests removeObject:loadingRequest];
 }
 
@@ -124,6 +124,21 @@
     [self.pendingRequests removeObjectsInArray:requestsCompleted];
 }
 
+- (void)cancellAllRequests
+{
+    for (AVAssetResourceLoadingRequest *loadingRequest in self.pendingRequests){
+        [loadingRequest finishLoading];
+    }
+    [self.pendingRequests removeAllObjects];
+    [self.downloadSession.dataTask cancel];
+    [self.downloadSession.session  finishTasksAndInvalidate];
+}
+
+
+- (BOOL)isFileDownloaded
+{
+    return isLoadingComplete;
+}
 
 - (void)fillInContentInformation:(AVAssetResourceLoadingContentInformationRequest *)contentInformationRequest
 {
@@ -131,7 +146,8 @@
     {
         return;
     }
-    
+   
+    videoBytesLength = contentInformationRequest.contentLength;
     NSString *mimeType = [self.downloadSession.response MIMEType];
     CFStringRef contentType = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, (__bridge CFStringRef)(mimeType), NULL);
     
@@ -143,9 +159,12 @@
 
 - (void)addNewChunckOfData:(NSData *)data
 {
-    totalLength += data.length;
+    sumLength += data.length;
     NSLog(@" length %ld", data.length);
     [FileManagementHelper writeAtFileWithName:[self.delegate fileNameOfCurrentVideo] dataChunck:data];
+    if (videoBytesLength && videoBytesLength == sumLength) {
+        isLoadingComplete = YES;
+    }
 }
 
 

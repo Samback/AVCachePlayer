@@ -12,6 +12,13 @@
 @implementation FileManagementHelper
 
 
++ (BOOL)isDownloadedFileWithName:(NSString *)fileName
+{
+    NSString *fullPathToFileName = [FileManagementHelper fullPathToFileName:fileName];
+    NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingAtPath:fullPathToFileName];
+    return fileHandle ? YES : NO;
+}
+
 + (NSString *)fullPathToFileName:(NSString *)fileName
 {
     NSString *documentsDirectory = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
@@ -56,6 +63,19 @@
     }
 }
 
+
++ (NSError *)tryToDeleteFileWithName:(NSString *)fileName
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *filePath = [FileManagementHelper fullPathToFileName:fileName];
+    NSError *error;
+    BOOL success = [fileManager removeItemAtPath:filePath error:&error];
+    if (success) {
+        return nil;
+    } else {
+        return error;
+    }
+}
 
 
 

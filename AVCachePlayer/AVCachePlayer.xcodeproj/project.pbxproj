@@ -15,6 +15,10 @@
 		34682D2C1BCE480700DA43DB /* AVCachePlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 34682D2B1BCE480700DA43DB /* AVCachePlayerTests.m */; };
 		34682D3D1BCE4AEB00DA43DB /* VideoSetVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 34682D3C1BCE4AEB00DA43DB /* VideoSetVC.m */; settings = {ASSET_TAGS = (); }; };
 		34682D411BCE518200DA43DB /* MyAVPlayeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 34682D401BCE518200DA43DB /* MyAVPlayeVC.m */; settings = {ASSET_TAGS = (); }; };
+		349040FF1BD2CB5A00D927BE /* FileManagementHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 349040FE1BD2CB5A00D927BE /* FileManagementHelper.m */; settings = {ASSET_TAGS = (); }; };
+		349041041BD2DA2E00D927BE /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 349041031BD2DA2E00D927BE /* NSString+MD5.m */; settings = {ASSET_TAGS = (); }; };
+		3490410B1BD2DD6E00D927BE /* ResourceLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 3490410A1BD2DD6E00D927BE /* ResourceLoader.m */; settings = {ASSET_TAGS = (); }; };
+		3490410E1BD2E29700D927BE /* DownloadSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 3490410D1BD2E29700D927BE /* DownloadSession.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +47,14 @@
 		34682D3C1BCE4AEB00DA43DB /* VideoSetVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VideoSetVC.m; path = VideoSet/VideoSetVC.m; sourceTree = "<group>"; };
 		34682D3F1BCE518200DA43DB /* MyAVPlayeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyAVPlayeVC.h; path = VideoPlaying/MyAVPlayeVC.h; sourceTree = "<group>"; };
 		34682D401BCE518200DA43DB /* MyAVPlayeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyAVPlayeVC.m; path = VideoPlaying/MyAVPlayeVC.m; sourceTree = "<group>"; };
+		349040FD1BD2CB5A00D927BE /* FileManagementHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileManagementHelper.h; path = Helpers/FileManagementHelper.h; sourceTree = "<group>"; };
+		349040FE1BD2CB5A00D927BE /* FileManagementHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FileManagementHelper.m; path = Helpers/FileManagementHelper.m; sourceTree = "<group>"; };
+		349041021BD2DA2E00D927BE /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
+		349041031BD2DA2E00D927BE /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
+		349041091BD2DD6E00D927BE /* ResourceLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ResourceLoader.h; path = VideoSet/Networking/ResourceLoader.h; sourceTree = "<group>"; };
+		3490410A1BD2DD6E00D927BE /* ResourceLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ResourceLoader.m; path = VideoSet/Networking/ResourceLoader.m; sourceTree = "<group>"; };
+		3490410C1BD2E29700D927BE /* DownloadSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DownloadSession.h; path = VideoSet/Networking/DownloadSession.h; sourceTree = "<group>"; };
+		3490410D1BD2E29700D927BE /* DownloadSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DownloadSession.m; path = VideoSet/Networking/DownloadSession.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +96,8 @@
 		34682D101BCE480700DA43DB /* AVCachePlayer */ = {
 			isa = PBXGroup;
 			children = (
+				349041011BD2D98400D927BE /* Categories */,
+				349041001BD2CB6000D927BE /* Helpers */,
 				34682D361BCE484D00DA43DB /* VideoSet */,
 				34682D3E1BCE512300DA43DB /* VideoPlaying */,
 				34682D141BCE480700DA43DB /* AppDelegate.h */,
@@ -126,10 +140,40 @@
 		34682D3E1BCE512300DA43DB /* VideoPlaying */ = {
 			isa = PBXGroup;
 			children = (
+				349041051BD2DCDD00D927BE /* Networking */,
 				34682D3F1BCE518200DA43DB /* MyAVPlayeVC.h */,
 				34682D401BCE518200DA43DB /* MyAVPlayeVC.m */,
 			);
 			name = VideoPlaying;
+			sourceTree = "<group>";
+		};
+		349041001BD2CB6000D927BE /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				349040FD1BD2CB5A00D927BE /* FileManagementHelper.h */,
+				349040FE1BD2CB5A00D927BE /* FileManagementHelper.m */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
+		349041011BD2D98400D927BE /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				349041021BD2DA2E00D927BE /* NSString+MD5.h */,
+				349041031BD2DA2E00D927BE /* NSString+MD5.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
+		349041051BD2DCDD00D927BE /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				349041091BD2DD6E00D927BE /* ResourceLoader.h */,
+				3490410A1BD2DD6E00D927BE /* ResourceLoader.m */,
+				3490410C1BD2E29700D927BE /* DownloadSession.h */,
+				3490410D1BD2E29700D927BE /* DownloadSession.m */,
+			);
+			name = Networking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -232,10 +276,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3490410E1BD2E29700D927BE /* DownloadSession.m in Sources */,
+				349041041BD2DA2E00D927BE /* NSString+MD5.m in Sources */,
 				34682D161BCE480700DA43DB /* AppDelegate.m in Sources */,
 				34682D411BCE518200DA43DB /* MyAVPlayeVC.m in Sources */,
+				3490410B1BD2DD6E00D927BE /* ResourceLoader.m in Sources */,
 				34682D3D1BCE4AEB00DA43DB /* VideoSetVC.m in Sources */,
 				34682D131BCE480700DA43DB /* main.m in Sources */,
+				349040FF1BD2CB5A00D927BE /* FileManagementHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,6 +472,7 @@
 				34682D321BCE480700DA43DB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		34682D331BCE480700DA43DB /* Build configuration list for PBXNativeTarget "AVCachePlayerTests" */ = {
 			isa = XCConfigurationList;
@@ -432,6 +481,7 @@
 				34682D351BCE480700DA43DB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

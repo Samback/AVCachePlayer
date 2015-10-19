@@ -93,8 +93,6 @@ NSString * const AVCACHE_PLAYER_CONTENT_TYPE = @"public.mpeg-4";
     
     if (sumLength < startOffset)
     {
-        NSLog(@"sum %ld  offset %lld",sumLength,  startOffset);
-        NSLog(@"This data was not loaded yet");
         return NO;
     }
     

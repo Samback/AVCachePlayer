@@ -44,10 +44,7 @@
     [super viewDidDisappear:animated];
     [self.player cancelPendingPrerolls];
     if (![[ClipsDB sharedManager] isFileWithLinkAlreadyDownloaded:_initialLink.absoluteString]) {
-        NSError *error = [FileManagementHelper tryToDeleteFileWithName:[self.baseVideoLink absoluteString]];
-        if (error) {
-            NSLog(@"Error it was an error duaring removing of file %@", error.localizedDescription);
-        }
+        [self deleteBrokenFile];
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:AVCACHE_PLAYER_REMOVE_HUD_NOTIFICATION
                                                         object:nil];
@@ -71,10 +68,7 @@
         [self.player play];
     } else {
         if ([FileManagementHelper isDownloadedFileWithName:[self.baseVideoLink absoluteString]]) {
-            NSError *error = [FileManagementHelper tryToDeleteFileWithName:[self.baseVideoLink absoluteString]];
-            if (error) {
-                NSLog(@"Error it was an error duaring removing of file %@", error.localizedDescription);
-            }
+            [self deleteBrokenFile];
         }
         AVURLAsset *asset = [AVURLAsset URLAssetWithURL:_baseVideoLink options:nil];
         [self startDownloadHUD];
@@ -84,6 +78,14 @@
         AVPlayerItem *playerItem = [AVPlayerItem playerItemWithAsset:asset];
         self.player = [[AVPlayer alloc] initWithPlayerItem:playerItem];
         [self.player play];
+    }
+}
+
+- (void)deleteBrokenFile
+{
+    NSError *error = [FileManagementHelper tryToDeleteFileWithName:[self.baseVideoLink absoluteString]];
+    if (error) {
+        NSLog(@"Error it was an error duaring removing of file %@", error.localizedDescription);
     }
 }
 

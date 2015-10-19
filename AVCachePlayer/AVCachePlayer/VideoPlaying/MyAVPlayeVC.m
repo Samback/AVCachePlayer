@@ -12,6 +12,7 @@
 #import "MyAVPlayeVC+HUDWorker.h"
 #import "ResourceLoader.h"
 #import "FileManagementHelper.h"
+#import "ClipsDB.h"
 
 @interface MyAVPlayeVC () <ResourceLoaderDelegate>
 @property (nonatomic, strong) NSURL *baseVideoLink;
@@ -42,7 +43,7 @@
 {
     [super viewDidDisappear:animated];
     [self.player cancelPendingPrerolls];
-    if (self.resourceLoader && ![self.resourceLoader isFileDownloaded]) {
+    if (![[ClipsDB sharedManager] isFileWithLinkAlreadyDownloaded:_initialLink.absoluteString]) {
         NSError *error = [FileManagementHelper tryToDeleteFileWithName:[self.baseVideoLink absoluteString]];
         if (error) {
             NSLog(@"Error it was an error duaring removing of file %@", error.localizedDescription);

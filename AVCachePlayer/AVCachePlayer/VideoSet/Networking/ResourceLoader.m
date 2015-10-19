@@ -9,6 +9,7 @@
 #import "ResourceLoader.h"
 #import "FileManagementHelper.h"
 #import "DownloadSession.h"
+#import "ClipsDb.h"
 
 #import <MobileCoreServices/MobileCoreServices.h>
 
@@ -171,6 +172,7 @@ NSString const *AVCACHE_PLAYER_DATA_TOTAL_LENGTH = @"AVCACHE_PLAYER_DATA_TOTAL_L
     if (videoBytesLength == sumLength && videoBytesLength != 0) {
         [[NSNotificationCenter defaultCenter] postNotificationName:AVCACHE_PLAYER_REMOVE_HUD_NOTIFICATION
                                                             object:nil];
+        [[ClipsDB sharedManager] markFileWithLink:[self.delegate inputVideoURL].absoluteString];
         isLoadingComplete = YES;
     }
 }

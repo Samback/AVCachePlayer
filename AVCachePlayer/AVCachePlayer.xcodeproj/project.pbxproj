@@ -20,6 +20,7 @@
 		3490410B1BD2DD6E00D927BE /* ResourceLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 3490410A1BD2DD6E00D927BE /* ResourceLoader.m */; settings = {ASSET_TAGS = (); }; };
 		3490410E1BD2E29700D927BE /* DownloadSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 3490410D1BD2E29700D927BE /* DownloadSession.m */; settings = {ASSET_TAGS = (); }; };
 		349041151BD4469200D927BE /* MyAVPlayeVC+HUDWorker.m in Sources */ = {isa = PBXBuildFile; fileRef = 349041141BD4469200D927BE /* MyAVPlayeVC+HUDWorker.m */; settings = {ASSET_TAGS = (); }; };
+		34C5F8CC1BD4662C005E461E /* ClipsDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C5F8CB1BD4662C005E461E /* ClipsDB.m */; settings = {ASSET_TAGS = (); }; };
 		61614DD1BE5746F52D3D3D05 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1912BB6AC5F927821F0050C /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +60,8 @@
 		3490410D1BD2E29700D927BE /* DownloadSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DownloadSession.m; path = VideoSet/Networking/DownloadSession.m; sourceTree = "<group>"; };
 		349041131BD4469200D927BE /* MyAVPlayeVC+HUDWorker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MyAVPlayeVC+HUDWorker.h"; path = "VideoPlaying/Categories/MyAVPlayeVC+HUDWorker.h"; sourceTree = "<group>"; };
 		349041141BD4469200D927BE /* MyAVPlayeVC+HUDWorker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MyAVPlayeVC+HUDWorker.m"; path = "VideoPlaying/Categories/MyAVPlayeVC+HUDWorker.m"; sourceTree = "<group>"; };
+		34C5F8CA1BD4662C005E461E /* ClipsDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClipsDB.h; path = Helpers/ClipsDB.h; sourceTree = "<group>"; };
+		34C5F8CB1BD4662C005E461E /* ClipsDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ClipsDB.m; path = Helpers/ClipsDB.m; sourceTree = "<group>"; };
 		3516F0DCC77D0B8A47DE29AC /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		A1912BB6AC5F927821F0050C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6C6DE7CBE257D1387B2B512 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -171,6 +174,8 @@
 			children = (
 				349040FD1BD2CB5A00D927BE /* FileManagementHelper.h */,
 				349040FE1BD2CB5A00D927BE /* FileManagementHelper.m */,
+				34C5F8CA1BD4662C005E461E /* ClipsDB.h */,
+				34C5F8CB1BD4662C005E461E /* ClipsDB.m */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -355,6 +360,7 @@
 				34682D411BCE518200DA43DB /* MyAVPlayeVC.m in Sources */,
 				3490410B1BD2DD6E00D927BE /* ResourceLoader.m in Sources */,
 				34682D3D1BCE4AEB00DA43DB /* VideoSetVC.m in Sources */,
+				34C5F8CC1BD4662C005E461E /* ClipsDB.m in Sources */,
 				34682D131BCE480700DA43DB /* main.m in Sources */,
 				349040FF1BD2CB5A00D927BE /* FileManagementHelper.m in Sources */,
 			);

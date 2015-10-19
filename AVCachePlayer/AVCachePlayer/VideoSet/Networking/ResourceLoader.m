@@ -17,6 +17,7 @@ NSString *AVCACHE_PLAYER_GET_DATA_NOTIFICATION = @"AVCACHE_PLAYER_GET_DATA_NOTIF
 NSString *AVCACHE_PLAYER_REMOVE_HUD_NOTIFICATION = @"AVCACHE_PLAYER_REMOVE_HUD_NOTIFICATION";
 NSString const *AVCACHE_PLAYER_GET_DATA_OFFSET = @"AVCACHE_PLAYER_GET_DATA_OFFSET";
 NSString const *AVCACHE_PLAYER_DATA_TOTAL_LENGTH = @"AVCACHE_PLAYER_DATA_TOTAL_LENGTH";
+NSString * const AVCACHE_PLAYER_CONTENT_TYPE = @"public.mpeg-4";
 
 @interface ResourceLoader () <DownloadSessionDelegate>
 {
@@ -53,6 +54,11 @@ NSString const *AVCACHE_PLAYER_DATA_TOTAL_LENGTH = @"AVCACHE_PLAYER_DATA_TOTAL_L
 {
     if(isLoadingComplete == YES)
     {
+        if (loadingRequest.contentInformationRequest.contentType &&
+            ![loadingRequest.contentInformationRequest.contentType isEqualToString:AVCACHE_PLAYER_CONTENT_TYPE])
+        {
+            loadingRequest.contentInformationRequest.contentType = AVCACHE_PLAYER_CONTENT_TYPE;
+        }
         [self.pendingRequests addObject:loadingRequest];
         [self processPendingRequests];
         return YES;
@@ -68,6 +74,11 @@ NSString const *AVCACHE_PLAYER_DATA_TOTAL_LENGTH = @"AVCACHE_PLAYER_DATA_TOTAL_L
         isLoadingComplete = NO;
     }
     
+    if (loadingRequest.contentInformationRequest.contentType &&
+        ![loadingRequest.contentInformationRequest.contentType isEqualToString:AVCACHE_PLAYER_CONTENT_TYPE])
+    {
+        loadingRequest.contentInformationRequest.contentType = AVCACHE_PLAYER_CONTENT_TYPE;
+    }
     [self.pendingRequests addObject:loadingRequest];
     return YES;
 }
@@ -82,6 +93,7 @@ NSString const *AVCACHE_PLAYER_DATA_TOTAL_LENGTH = @"AVCACHE_PLAYER_DATA_TOTAL_L
     
     if (sumLength < startOffset)
     {
+        NSLog(@"sum %ld  offset %lld",sumLength,  startOffset);
         NSLog(@"This data was not loaded yet");
         return NO;
     }

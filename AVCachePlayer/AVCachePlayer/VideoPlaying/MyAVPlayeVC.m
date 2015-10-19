@@ -63,13 +63,19 @@
 
 - (void)setupVideoPlayerConfiguration
 {
-    if ([FileManagementHelper isDownloadedFileWithName:[_baseVideoLink absoluteString]]) {
+    if ([[ClipsDB sharedManager] isFileWithLinkAlreadyDownloaded:_initialLink.absoluteString]) {
         NSURL *filePathURL = [NSURL fileURLWithPath:[FileManagementHelper fullPathToFileName:[_baseVideoLink absoluteString]]];
         AVAsset *asset = [AVURLAsset URLAssetWithURL:filePathURL options:nil];
         AVPlayerItem *anItem = [AVPlayerItem playerItemWithAsset:asset];
         self.player = [AVPlayer playerWithPlayerItem:anItem];
         [self.player play];
     } else {
+        if ([FileManagementHelper isDownloadedFileWithName:[self.baseVideoLink absoluteString]]) {
+            NSError *error = [FileManagementHelper tryToDeleteFileWithName:[self.baseVideoLink absoluteString]];
+            if (error) {
+                NSLog(@"Error it was an error duaring removing of file %@", error.localizedDescription);
+            }
+        }
         AVURLAsset *asset = [AVURLAsset URLAssetWithURL:_baseVideoLink options:nil];
         [self startDownloadHUD];
         self.resourceLoader = [ResourceLoader createResourceLoaderWithDelegate:self];

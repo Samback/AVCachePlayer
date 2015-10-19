@@ -31,7 +31,7 @@ static NSString *kClipKey = @"kClipKey";
         _clipList = @[
                       @[@"Cat", @"http://youtubeinmp4.com/redirect.php?video=iSR_GmaaMj4&r=7%2BLGbNFYs%2FC5q381fD5yDA5BTEZfgjy%2BeiLzLrYRRbo%3D"],
                       @[@"Droider", @"http://youtubeinmp4.com/redirect.php?video=MzqyGfQcilA&r=fewjCqH0bQLuZroQE8as%2FCGsDEW9WFOT6kKc%2FXP91Sc%3D"],
-                      @[@"Rabit" , @"http://sample-videos.com/video/mp4/720/big_buck_bunny_720p_50mb.mp4"]
+                      @[@"Selfi" , @"http://youtubeinmp4.com/redirect.php?video=IeBgVwSbE1A&r=3LvlsDNh3wntcPFjGmWjAU2dmq6Qi%2BkQrx%2FAcVGNeGg%3D"]
                       ];
     }
     return _clipList;
